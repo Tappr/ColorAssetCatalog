@@ -20,8 +20,8 @@ public extension UIColor {
      - Parameter name: The name of the color in the asset catalog.
      - Returns: A UIColor or nil if a color is not found of that name.
      */
-    public convenience init?(asset name: String) {
-        if #available(iOS 11.0, *) {
+    public convenience init?(asset name: String, forceFallback: Bool = false) {
+        if #available(iOS 11.0, *), !forceFallback {
             self.init(named: name)
         } else {
             guard let cgColor = ColorAssetManager.shared.cgColor(named: name) else { return nil }
@@ -43,8 +43,8 @@ public extension UIColor {
      - Parameter name: The name of the color in the asset catalog.
      - Returns: A UIColor or nil if a color is not found of that name.
      */
-    public convenience init?(asset name: String, in bundle: Bundle?, compatibleWith traitCollection: UITraitCollection?) {
-        if #available(iOS 11.0, *) {
+    public convenience init?(asset name: String, in bundle: Bundle?, compatibleWith traitCollection: UITraitCollection?, forceFallback: Bool = false) {
+        if #available(iOS 11.0, *), !forceFallback {
             self.init(named: name, in: bundle, compatibleWith: traitCollection)
         } else {
             let originalBundle = ColorAssetManager.shared.bundle
